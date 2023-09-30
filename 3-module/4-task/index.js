@@ -1,3 +1,7 @@
+function showSalary(users, age) { // С использованием комбинации методов filter() и map().
+  return users.filter ((user) => user.age <= age).map (user => `${user.name}, ${user.balance}`).join('\n');
+}
+
 function showSalary(users, age) {
   let result = [];
   users.map ((user) => {
@@ -15,3 +19,4 @@ function showSalary(users, age) { // Per methodos ad astra!
   return result;
 }, []); return (array.join('\n'));
 };
+
