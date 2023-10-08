@@ -13,6 +13,10 @@
  *
  */
 export default class UserTable {
+  get elem() {
+    return document.querySelector ('.users-table');
+  }
+
   constructor(rows) {
     if (!document.querySelector ('.table-head')) {
       let table = document.createElement ('table');
@@ -50,13 +54,11 @@ export default class UserTable {
       tableRow.append (rowCell);
       rowCell.insertAdjacentHTML ('beforeend', buttonTemplate);
     }
+
     tableBody.addEventListener ('click', (event) => {
       if (event.target.getAttribute ('class') == 'closing-button') {
         event.target.closest ('tr').remove();
       }
-    })
-  };
-  get elem() {
-    return document.querySelector ('.users-table');
+    });
   }
 }
