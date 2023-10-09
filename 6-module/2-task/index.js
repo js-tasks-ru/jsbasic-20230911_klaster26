@@ -17,12 +17,12 @@ export default class ProductCard {
         <span class="card__price">€${this.#product.price.toFixed (2)}</span>
     </div>
     <div class="card__body">
-        <div class="card__title">${this.#product.name}</div>
+      <div class="card__title">${this.#product.name}</div>
         <button type="button" class="card__button">
-            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
-        </button>
-    </div>
-</div>`)
+          <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+         </button>
+       </div>
+     </div>`)
   }
 
   #render () {
@@ -35,12 +35,8 @@ export default class ProductCard {
       detail: this.#product.id,
       bubbles: true,
     });
-    console.log ('smth')
-
     this.elem.dispatchEvent(event);
   }
-
-
 }
 
 
