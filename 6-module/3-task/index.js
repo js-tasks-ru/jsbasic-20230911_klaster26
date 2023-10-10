@@ -100,6 +100,5 @@ export default class Carousel {
     for (let elem of this.elem.querySelectorAll ('.carousel__slide')) {
       elem.dispatchEvent(happening);
     }
-    console.log(event.target.closest('.carousel__slide').dataset.id);
   }
 }
