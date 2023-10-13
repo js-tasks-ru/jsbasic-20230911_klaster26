@@ -5,6 +5,12 @@ export default class Modal {
   #title;
   #body;
 
+  constructor() {
+    this.#elem = null;
+    this.#title = null;
+    this.#body = null;
+    }
+
   open = () => {
     this.#render();
     document.body.classList.add('is-modal-open');
@@ -37,17 +43,11 @@ export default class Modal {
   close = () => {
     this.#elem.remove();
     document.body.classList.remove('is-modal-open');
-  }
-
-  constructor() {
-  this.#elem = null;
-  this.#title = null;
-  this.#body = null;
+    document.removeEventListener('keydown', this.#escape);
   }
 
   #render = () => {
     return this.#elem = createElement(this.#template());
-
   }
 
   #template = () => {
@@ -72,14 +72,17 @@ export default class Modal {
   #onClickEvent = () => {
     const button = document.querySelector('.modal__close');
     button.addEventListener('click', this.close, {once: true});
+    document.removeEventListener('keydown', this.#escape);
+  }
+
+  #escape = () => {
+    if (event.code == 'Escape') {
+      this.#elem.remove();
+      document.body.classList.remove('is-modal-open');
+    }
   }
 
   #escapeEvent = () => {
-    document.addEventListener('keydown', () => {
-      if (event.code == 'Escape') {
-        this.#elem.remove();
-        document.body.classList.remove('is-modal-open');
-      }
-    }, {once: true});
+    document.addEventListener('keydown', this.#escape, {once: true});
   }
 }
