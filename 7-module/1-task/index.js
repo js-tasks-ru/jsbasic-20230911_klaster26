@@ -43,7 +43,6 @@ export default class RibbonMenu {
     const leftString = this.elem.querySelector('.ribbon__arrow_left');
     const ribbonInner = this.elem.querySelector('.ribbon__inner');
 
-
     ribbonInner.addEventListener('scroll', () => {
       if (ribbonInner.scrollLeft == 0) {
         leftString.classList.remove('ribbon__arrow_visible');
@@ -62,7 +61,7 @@ export default class RibbonMenu {
         rightString.classList.add('ribbon__arrow_visible');
       }})
 
-    wholeRibbon.addEventListener('click', (event) => {
+      wholeRibbon.addEventListener('click', (event) => {
       if (event.target == rightString || event.target == rightString.firstElementChild) {
         ribbonInner.scrollBy(350, 0);
 
@@ -74,27 +73,26 @@ export default class RibbonMenu {
   }
 
   #eventMaker = () => {
+    const ribbonItemArray = Array.from(this.elem.querySelectorAll('.ribbon__item'));
     const rightString = this.elem.querySelector('.ribbon__arrow_right');
     const leftString = this.elem.querySelector('.ribbon__arrow_left');
-    this.elem.addEventListener ('click', () => {
+    for (let item of ribbonItemArray) {
+    item.addEventListener('click', (event) => {
       event.preventDefault();
-      event.target.dispatchEvent(this.#onClickEvent());
-      for (let elem of this.elem.querySelectorAll ('.ribbon__item')) {
+      const onClickEvent = new CustomEvent("product-add", {
+        detail: event.target.dataset.id,
+        bubbles: true,
+        });
+      event.target.dispatchEvent(onClickEvent);
+      for (let elem of ribbonItemArray) {
         elem.classList.remove('ribbon__item_active');
       }
       if (event.target != rightString && event.target != leftString) {
       event.target.classList.add('ribbon__item_active');
       }
       //console.log(event.target.dataset.id); // В консоль логируется data-id выбранного элемента.
-      //console.log(this.#onClickEvent() instanceof CustomEvent); // В консоль логируется true, событие произошло от CustomEvent.
-      //console.log ((this.#onClickEvent())); // В консоль логириуется событие с соответствующим выбранному элементу значением details.
-    });
-  }
-
-  #onClickEvent = () => {
-    return new CustomEvent("product-add", {
-    detail: event.target.dataset.id,
-    bubbles: true,
-    });
+      //console.log(onClickEvent instanceof CustomEvent); // В консоль логируется true, событие произошло от CustomEvent.
+      //console.log (onClickEvent); // В консоль логириуется событие с соответствующим выбранному элементу значением details.
+    })};
   }
 }
