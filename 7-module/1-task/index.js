@@ -79,20 +79,17 @@ export default class RibbonMenu {
     for (let item of ribbonItemArray) {
     item.addEventListener('click', (event) => {
       event.preventDefault();
-      const onClickEvent = new CustomEvent("product-add", {
-        detail: event.target.dataset.id,
+      const onClickEvent = new CustomEvent("ribbon-select", {
+        detail: item.dataset.id,
         bubbles: true,
         });
-      event.target.dispatchEvent(onClickEvent);
+      this.elem.dispatchEvent(onClickEvent);
       for (let elem of ribbonItemArray) {
         elem.classList.remove('ribbon__item_active');
       }
       if (event.target != rightString && event.target != leftString) {
       event.target.classList.add('ribbon__item_active');
       }
-      //console.log(event.target.dataset.id); // В консоль логируется data-id выбранного элемента.
-      //console.log(onClickEvent instanceof CustomEvent); // В консоль логируется true, событие произошло от CustomEvent.
-      //console.log (onClickEvent); // В консоль логириуется событие с соответствующим выбранному элементу значением details.
     })};
   }
 }
