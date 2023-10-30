@@ -22,7 +22,7 @@ export default class Carousel {
         ${this.#tableContentMaker(this.slides)}
         </div>
       </div>
-    `
+    `;
   }
 
   #render = () => {
@@ -54,51 +54,41 @@ export default class Carousel {
 
     if (initPosition >= 0) {
       leftStringDiv.style.display = 'none';
-    };
+    }
 
     wholeCarousel.addEventListener('click', (event) => {
-      if (event.target.getAttribute('class') == 'carousel__arrow carousel__arrow_right'
-      || event.target.parentElement.getAttribute('class') == 'carousel__arrow carousel__arrow_right') {
+      if (event.target == rightStringDiv || event.target.parentElement == rightStringDiv) {
         carouselInner
         .style.transform = `translateX(${initPosition - carouselInner.offsetWidth}px)`;
         initPosition -= carouselInner.offsetWidth;
       }
 
-
-      if (event.target.getAttribute('class') == 'carousel__arrow carousel__arrow_left'
-      || event.target.parentElement.getAttribute('class') == 'carousel__arrow carousel__arrow_left') {
+      if (event.target == leftStringDiv || event.target.parentElement == leftStringDiv) {
         carouselInner
         .style.transform = `translateX(${initPosition + carouselInner.offsetWidth}px)`;
         initPosition += carouselInner.offsetWidth;
-      };
-
-      if (initPosition <= - carouselInner.offsetWidth * (carouselInner.querySelectorAll('.carousel__slide').length - 1)) {
-        rightStringDiv.style.display = 'none';
       }
-      else {
+
+      if (initPosition <= -carouselInner.offsetWidth * (carouselInner.querySelectorAll('.carousel__slide').length - 1)) {
+        rightStringDiv.style.display = 'none';
+      } else {
         rightStringDiv.style.display = '';
-        }
+      }
 
       if (initPosition >= 0) {
         leftStringDiv.style.display = 'none';
-        }
-      else {
+      } else {
         leftStringDiv.style.display = '';
       }
     });
 
-    for (let elem of this.elem.querySelectorAll ('.carousel__button')) {
-      elem.addEventListener ('click', this.#onClickEvent);
-    }
-  }
-
-  #onClickEvent = () => {
-    const happening = new CustomEvent("product-add", {
-      detail: event.target.closest('.carousel__slide').dataset.id,
-      bubbles: true,
-    });
-    for (let elem of this.elem.querySelectorAll ('.carousel__slide')) {
-      elem.dispatchEvent(happening);
+    for (let elem of this.elem.querySelectorAll('.carousel__button')) {
+      elem.addEventListener('click', () => {
+        elem.dispatchEvent(new CustomEvent("product-add", {
+          detail: elem.closest('.carousel__slide').dataset.id,
+          bubbles: true,
+        }));
+      });
     }
   }
 }
