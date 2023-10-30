@@ -19,7 +19,7 @@ export default class UserTable {
 
   constructor(rows) {
     this.#rows = rows || this.#rows;
-    this.#renderer ();
+    this.#renderer();
     this.#closer(this.elem);
   }
 
@@ -39,27 +39,27 @@ export default class UserTable {
       ${this.#tableContentMaker(this.#rows)}
       </tbody>
       </table>
-      `
-    }
-
-  #renderer () {
-    this.elem = createElement (this.#template());
+      `;
   }
 
-  #tableContentMaker (arr) {
-    let buttonTemplate = `<td><button class='closing-button'>X</button></td>`
-    return arr.map ((user) => {
+  #renderer () {
+    this.elem = createElement(this.#template());
+  }
+
+  #tableContentMaker(arr) {
+    let buttonTemplate = `<td><button class='closing-button'>X</button></td>`;
+    return arr.map((user) => {
       let temp = [];
       for (let parameter in user) {
         temp.push(`<td>${user[parameter]}</td>$`);
       } return `<tr>${temp} ${buttonTemplate}</tr>`;
-     });
+    });
   }
 
   #closer = () => {
-    this.elem.addEventListener ('click', (event) => {
-      if (event.target.getAttribute ('class') === 'closing-button') {
-        event.target.closest ('tr').remove();
+    this.elem.addEventListener('click', (event) => {
+      if (event.target.getAttribute('class') === 'closing-button') {
+        event.target.closest('tr').remove();
       }
     });
   }
