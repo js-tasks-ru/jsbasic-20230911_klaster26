@@ -1,6 +1,6 @@
 function getMinMax(str) {
   str = str.split(' ');
-  let array = str.reduce ((result, item) => {
+  let array = str.reduce((result, item) => {
     if (isFinite(item)) {
       result.push(item);
     } return result;
