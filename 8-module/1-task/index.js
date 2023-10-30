@@ -22,10 +22,10 @@ export default class CartIcon {
           <span class="cart-icon__price">€${cart.getTotalPrice().toFixed(2)}</span>
         </div>`;
 
-        if (this.elem.offsetHeight) {
-          this.#cartTopCoord = document.querySelector('.cart-icon__inner').getBoundingClientRect().top + window.scrollY
+      if (!this.#cartTopCoord && this.elem.offsetHeight) {
+        this.#cartTopCoord = document.querySelector('.cart-icon__inner').getBoundingClientRect().top + window.scrollY
         || this.#cartTopCoord;
-        }
+      }
 
       this.updatePosition();
 
@@ -64,15 +64,15 @@ export default class CartIcon {
           top: '50px',
           zIndex: 1e3,
           right: '10px',
-          left: `${leftPos}px`})
-      } else {
-        Object.assign(this.elem.style, {
-          position: '',
-          top: '',
-          left: '',
-          zIndex: ''
-        });
+          left: `${leftPos}px`});
+        return;
       }
+      Object.assign(this.elem.style, {
+        position: '',
+        top: '',
+        left: '',
+        zIndex: ''
+      });
     }
   }
 }
