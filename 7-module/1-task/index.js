@@ -28,7 +28,7 @@ export default class RibbonMenu {
         <button class="ribbon__arrow ribbon__arrow_right ribbon__arrow_visible">
           <img src="/assets/images/icons/angle-icon.svg" alt="icon">
         </button>
-      </div>`
+      </div>`;
   }
 
   #elemContentMaker = (arr) => {
@@ -48,7 +48,7 @@ export default class RibbonMenu {
         leftString.classList.remove('ribbon__arrow_visible');
       } else {
         leftString.classList.add('ribbon__arrow_visible');
-      }})
+      }});
 
     ribbonInner.addEventListener('scroll', () => {
       let scrollWidth = ribbonInner.scrollWidth;
@@ -59,16 +59,16 @@ export default class RibbonMenu {
         rightString.classList.remove('ribbon__arrow_visible');
       } else {
         rightString.classList.add('ribbon__arrow_visible');
-      }})
+      }});
 
-      wholeRibbon.addEventListener('click', (event) => {
+    wholeRibbon.addEventListener('click', (event) => {
       if (event.target == rightString || event.target == rightString.firstElementChild) {
         ribbonInner.scrollBy(350, 0);
 
       }
       if (event.target == leftString || event.target == leftString.firstElementChild) {
         ribbonInner.scrollBy(-350, 0);
-      };
+      }
     });
   }
 
@@ -76,20 +76,22 @@ export default class RibbonMenu {
     const ribbonItemArray = Array.from(this.elem.querySelectorAll('.ribbon__item'));
     const rightString = this.elem.querySelector('.ribbon__arrow_right');
     const leftString = this.elem.querySelector('.ribbon__arrow_left');
+
     for (let item of ribbonItemArray) {
-    item.addEventListener('click', (event) => {
-      event.preventDefault();
-      const onClickEvent = new CustomEvent("ribbon-select", {
-        detail: item.dataset.id,
-        bubbles: true,
+      item.addEventListener('click', (event) => {
+        event.preventDefault();
+        const onClickEvent = new CustomEvent("ribbon-select", {
+          detail: item.dataset.id,
+          bubbles: true,
         });
-      this.elem.dispatchEvent(onClickEvent);
-      for (let elem of ribbonItemArray) {
-        elem.classList.remove('ribbon__item_active');
-      }
-      if (event.target != rightString && event.target != leftString) {
-      event.target.classList.add('ribbon__item_active');
-      }
-    })};
+        this.elem.dispatchEvent(onClickEvent);
+        for (let elem of ribbonItemArray) {
+          elem.classList.remove('ribbon__item_active');
+        }
+        if (event.target != rightString && event.target != leftString) {
+          event.target.classList.add('ribbon__item_active');
+        }
+      });
+    }
   }
 }
