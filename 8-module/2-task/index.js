@@ -2,62 +2,49 @@ import createElement from '../../assets/lib/create-element.js';
 import ProductCard from '../../6-module/2-task/index.js';
 
 export default class ProductGrid {
-  elem = null;
+  elem;
 
   constructor(products) {
     this.products = products;
     this.filters = {};
+    this.elem = null;
     this.#render();
   }
 
   #render() {
     this.elem = createElement(
       `<div class="products-grid">
-          <div class="products-grid__inner">
-          </div>
-        </div>`);
-    this.elem.firstElementChild.append(...this.#template());
+         <div class="products-grid__inner">
+         <!--карточки товаров вставлять сюда-->
+         </div>
+      </div>`
+    );
+    this.#elementContent();
   }
 
-  #template() {
-    let template = [];
+  #elementContent() {
+    let inner = this.elem.querySelector(`.products-grid__inner`);
+    inner.innerHTML = '';
     for (let dish of this.products) {
-      let card = new ProductCard(dish).elem;
-      card.dataset.category = dish.category;
-      card.dataset.spiciness = dish.spiciness;
-      if (dish.nuts) {
-        card.dataset.nuts = dish.nuts;
+      if (this.filters.noNuts && dish.nuts) {
+        continue;
       }
-      if (dish.vegeterian) {
-        card.dataset.vegeterian = dish.vegeterian;
+      if (this.filters.vegeterianOnly && !dish.vegeterian) {
+        continue;
       }
-      template.push(card);
+      if (this.filters.maxSpiciness && dish.spiciness > this.filters.maxSpiciness) {
+        continue;
+      }
+      if (this.filters.category && dish.category != this.filters.category) {
+        continue;
+      }
+      let dishCard = new ProductCard(dish);
+      inner.append(dishCard.elem);
     }
-    return template;
   }
 
   updateFilter(filters) {
-    for (let dish of this.elem.querySelectorAll('.card')) {
-      if (filters.noNuts) {
-        if (dish.dataset.nuts) {
-          dish.remove();
-        }
-      }
-      if (filters.vegeterianOnly) {
-        if (!dish.dataset.vegeterian) {
-          dish.remove();
-        }
-      }
-      if (filters.maxSpiciness) {
-        if (Number(dish.dataset.spiciness) > filters.maxSpiciness) {
-          dish.remove();
-        }
-      }
-      if (filters.category) {
-        if (dish.dataset.category != filters.category) {
-          dish.remove();
-        }
-      }
-    }
+    Object.assign(this.filters, filters);
+    this.#elementContent();
   }
 }
