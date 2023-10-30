@@ -25,7 +25,7 @@ export default class Cart {
     } else {
       for (let dish of this.cartItems) {
         if (dish.product.name) {
-            dishNames.push(dish.product.name);
+          dishNames.push(dish.product.name);
         }
       }
       if (!dishNames.includes(product.name)) {
@@ -57,7 +57,7 @@ export default class Cart {
   }
 
   isEmpty() {
-     return this.cartItems.length == 0;
+    return this.cartItems.length == 0;
   }
 
   getTotalCount() {
@@ -159,7 +159,7 @@ export default class Cart {
   renderModal = () => {
     const modal = new Modal();
     modal.open();
-    const modalDOM = document.querySelector('.modal')
+    const modalDOM = document.querySelector('.modal');
     modal.setTitle('Your order');
     modal.setBody(this.#modalTemplate());
     modalDOM.addEventListener('click', this.#countChange);
@@ -195,7 +195,7 @@ export default class Cart {
   }
 
   #successMessage() {
-    return createElement (
+    return createElement(
       `<div class="modal__body-inner">
         <p>
           Order successful! Your order is being cooked :) <br>
@@ -206,7 +206,7 @@ export default class Cart {
   }
 
   #failMessage() {
-    return createElement (
+    return createElement(
       `<div class="modal__body-inner">
         <h3>
           There is some problem!<br>
@@ -230,11 +230,11 @@ export default class Cart {
       this.cartIcon.update(this);
       this.#modalTitle('Success!');
       this.#modalBody(this.#successMessage());
-    })
+    });
     responsePromise.catch((response) => {
       this.#modalTitle('Error!');
       this.#modalBody(this.#failMessage());
-    })
+    });
   };
 
   addEventListeners() {

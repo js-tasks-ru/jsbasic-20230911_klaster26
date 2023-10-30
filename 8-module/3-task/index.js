@@ -18,7 +18,7 @@ export default class Cart {
     } else {
       for (let dish of this.cartItems) {
         if (dish.product.name) {
-            dishNames.push(dish.product.name);
+          dishNames.push(dish.product.name);
         }
       }
       if (!dishNames.includes(product.name)) {
@@ -50,7 +50,7 @@ export default class Cart {
   }
 
   isEmpty() {
-     return this.cartItems.length == 0;
+    return this.cartItems.length == 0;
   }
 
   getTotalCount() {
