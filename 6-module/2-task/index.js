@@ -14,7 +14,7 @@ export default class ProductCard {
     return (`<div class="card">
     <div class="card__top">
         <img src="/assets/images/products/${this.#product.image}" class="card__image" alt="product">
-        <span class="card__price">€${this.#product.price.toFixed (2)}</span>
+        <span class="card__price">€${this.#product.price.toFixed(2)}</span>
     </div>
     <div class="card__body">
       <div class="card__title">${this.#product.name}</div>
@@ -22,12 +22,12 @@ export default class ProductCard {
           <img src="/assets/images/icons/plus-icon.svg" alt="icon">
          </button>
        </div>
-     </div>`)
+     </div>`);
   }
 
   #render () {
-    this.elem = createElement (this.#template());
-    this.elem.querySelector ('.card__button').addEventListener ('click', this.#onClickEvent);
+    this.elem = createElement(this.#template());
+    this.elem.querySelector('.card__button').addEventListener('click', this.#onClickEvent);
   }
 
   #onClickEvent = () => {
