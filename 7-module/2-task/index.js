@@ -9,7 +9,7 @@ export default class Modal {
     this.#elem = null;
     this.#title = null;
     this.#body = null;
-    }
+  }
 
   open = () => {
     this.#render();
@@ -22,22 +22,21 @@ export default class Modal {
   }
 
   setTitle = (title) => {
-      if(this.#elem) {
-        this.#elem.querySelector('.modal__title').innerHTML = title;
-      }
-      return this.#title = title;
-    }
+    if (this.#elem) {
+      this.#elem.querySelector('.modal__title').innerHTML = title;
+      return;
+    } return this.#title = title;
+  }
 
   setBody = (html) => {
-    if(this.#elem) {
+    if (this.#elem) {
       this.#elem.querySelector('.modal__body').remove();
       let tempElem = document.createElement('div');
       tempElem.classList.add('modal__body');
       this.#elem.querySelector('.modal__header').after(tempElem);
       this.#elem.querySelector('.modal__body').append(html);
-
-    };
-    return this.#body = html;
+      return;
+    } return this.#body = html;
   }
 
   close = () => {
@@ -51,7 +50,7 @@ export default class Modal {
   }
 
   #template = () => {
-     return `
+    return `
       <div class="modal">
         <div class="modal__overlay"></div>
         <div class="modal__inner">
@@ -65,7 +64,7 @@ export default class Modal {
           <div class="modal__body">
           </div>
         </div>
-      </div>`
+      </div>`;
 
   }
 
