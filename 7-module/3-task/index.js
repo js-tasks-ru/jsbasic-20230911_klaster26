@@ -10,7 +10,7 @@ export default class StepSlider {
     this.#value = value;
     this.#render();
     const spanArray = Array.from(this.elem.querySelector('.slider__steps').querySelectorAll('span'));
-    spanArray[value].classList.add ('slider__step-active');
+    spanArray[value].classList.add('slider__step-active');
     this.#onClickEvent();
   }
 
@@ -33,29 +33,30 @@ export default class StepSlider {
           ${this.#spanRender()}
         </div>
       </div>
-      `
+      `;
   }
 
   #spanRender = () => {
     let tempArray = [];
     for (let i = 0; i < this.#steps; i++) {
-      tempArray[i] = '<span></span>'}
+      tempArray[i] = '<span></span>';
+    }
     return tempArray.join('');
   }
 
   #onClickEvent = () => {
     const sliderFiller = (event) => {
       let left = event.clientX - this.elem.getBoundingClientRect().left;
-      let stepValue = Math.round(left/(this.elem.offsetWidth) * (this.#steps - 1));
+      let stepValue = Math.round(left / (this.elem.offsetWidth) * (this.#steps - 1));
       this.elem.querySelector('.slider__value').innerHTML = stepValue;
       this.elem.querySelector('.slider__thumb').style.left = `${stepValue / (this.#steps - 1) * 100}%`;
       this.elem.querySelector('.slider__progress').style.width = `${stepValue / (this.#steps - 1) * 100}%`;
       const eventCreator = new CustomEvent('slider-change', {
-          detail: stepValue,
-          bubbles: true,
-        })
+        detail: stepValue,
+        bubbles: true,
+      });
       this.elem.dispatchEvent(eventCreator);
-    }
+    };
     this.elem.addEventListener('click', sliderFiller);
   }
 }
