@@ -32,13 +32,15 @@ export default class ProductGrid {
       if (this.filters.vegeterianOnly && !dish.vegeterian) {
         continue;
       }
-      if (this.filters.maxSpiciness && dish.spiciness > this.filters.maxSpiciness) {
+      if (isFinite(this.filters.maxSpiciness) && Number(dish.spiciness) > Number(this.filters.maxSpiciness)) {
         continue;
       }
       if (this.filters.category && dish.category != this.filters.category) {
         continue;
       }
       let dishCard = new ProductCard(dish);
+      dishCard.elem.dataset.category = dish.category;
+      dishCard.elem.dataset.spiciness = dish.spiciness;
       inner.append(dishCard.elem);
     }
   }
